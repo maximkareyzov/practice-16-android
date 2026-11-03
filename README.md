@@ -18,4 +18,4 @@
 2. Дождаться Gradle Sync и запустить `app` на устройстве или эмуляторе Android 6.0 (API 23) и выше.
 3. Выбрать пользователя, нажать значок карандаша, изменить данные и сохранить. Повернуть устройство для проверки горизонтальной разметки.
 
-Для сборки из терминала: `./gradlew assembleDebug` (при установленном Android SDK и заданном `ANDROID_HOME`). Тест преобразования строки: `javac -encoding UTF-8 -d /tmp/practice16-test app/src/main/java/com/example/practice16/Transform.java tests/TransformTest.java && java -cp /tmp/practice16-test TransformTest`.
+Для сборки из терминала: `bash gradlew assembleDebug` (при установленном Android SDK и заданном `ANDROID_HOME`). Тест преобразования строки: `javac -encoding UTF-8 -d /tmp/practice16-test app/src/main/java/com/example/practice16/Transform.java tests/TransformTest.java && java -cp /tmp/practice16-test TransformTest`.
