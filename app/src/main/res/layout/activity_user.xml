@@ -2,6 +2,8 @@
     <ImageButton android:id="@+id/editorBack" android:src="@drawable/ic_back" android:background="@android:color/transparent" android:contentDescription="@string/back" android:layout_width="48dp" android:layout_height="48dp"/>
     <EditText android:id="@+id/editName" android:hint="@string/name_hint" android:inputType="text" android:singleLine="true" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <EditText android:id="@+id/editAge" android:hint="@string/age_hint" android:inputType="number" android:singleLine="true" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <EditText android:id="@+id/editState" android:hint="@string/state_hint" android:inputType="textMultiLine" android:gravity="top" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="0dp"/>
+    <FrameLayout android:background="@drawable/back_smoke_round" android:layout_margin="15dp" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="0dp">
+        <EditText android:id="@+id/editState" android:background="@android:color/transparent" android:layout_margin="15dp" android:hint="@string/state_hint" android:inputType="textMultiLine" android:gravity="top" android:layout_width="match_parent" android:layout_height="match_parent"/>
+    </FrameLayout>
     <Button android:id="@+id/saveButton" android:text="@string/save" android:layout_width="match_parent" android:layout_height="50dp"/>
 </LinearLayout>

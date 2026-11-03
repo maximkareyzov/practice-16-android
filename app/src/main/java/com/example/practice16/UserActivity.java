@@ -28,8 +28,7 @@ public class UserActivity extends Activity {
     private void save() {
         activeUser.setName(nameField.getText().toString());
         activeUser.setState(stateField.getText().toString());
-        try { activeUser.setAge(Integer.parseInt(ageField.getText().toString())); }
-        catch (NumberFormatException ignored) { /* Оставляем прежний возраст. */ }
+        activeUser.setAge(Transform.parseIntOrDefault(ageField.getText().toString(), activeUser.getAge()));
         finish();
     }
 }

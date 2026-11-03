@@ -1,1 +1,9 @@
-<resources><style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:colorAccent">#663AB6</item><item name="android:statusBarColor">#3700B3</item></style></resources>
+<resources>
+    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorAccent">#663AB6</item>
+        <item name="android:statusBarColor">#3700B3</item>
+    </style>
+    <style name="BaseContainer"><item name="android:layout_margin">5dp</item></style>
+    <style name="NameText" parent="BaseContainer"><item name="android:textSize">24sp</item><item name="android:textColor">@android:color/black</item></style>
+    <style name="StateText" parent="BaseContainer"><item name="android:textSize">14sp</item><item name="android:textColor">@android:color/black</item></style>
+</resources>
