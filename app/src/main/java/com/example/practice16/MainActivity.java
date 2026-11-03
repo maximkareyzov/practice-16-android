@@ -14,6 +14,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private final List<User> users = new ArrayList<>();
     private UserListAdapter adapter;
+    private View userPanel;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -23,7 +24,19 @@ public class MainActivity extends Activity {
         users.add(new User("Мария", "На занятиях", 21));
         users.add(new User("Алексей", "Работаю над проектом", 19));
         adapter = new UserListAdapter();
-        ((ListView) findViewById(R.id.listView)).setAdapter(adapter);
+        ListView listView = findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+        userPanel = findViewById(R.id.userPanel);
+        findViewById(R.id.backButton).setOnClickListener(v -> userPanel.setVisibility(View.GONE));
+        listView.setOnItemClickListener((parent, view, position, id) -> showUser(users.get(position)));
+
+    }
+
+    private void showUser(User user) {
+        ((TextView) findViewById(R.id.panelName)).setText(user.getName());
+        ((TextView) findViewById(R.id.panelState)).setText(user.getState());
+        ((TextView) findViewById(R.id.panelAge)).setText(String.valueOf(user.getAge()));
+        userPanel.setVisibility(View.VISIBLE);
     }
 
     private class UserListAdapter extends BaseAdapter {
