@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 public class UserActivity extends Activity {
     private User activeUser;
-    private EditText nameField, stateField;
+    private EditText nameField, stateField, ageField;
 
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
@@ -17,6 +17,8 @@ public class UserActivity extends Activity {
         activeUser = UserStaticInfo.users.get(position);
         nameField = findViewById(R.id.editName);
         stateField = findViewById(R.id.editState);
+        ageField = findViewById(R.id.editAge);
+        ageField.setText(String.valueOf(activeUser.getAge()));
         nameField.setText(activeUser.getName());
         stateField.setText(activeUser.getState());
         findViewById(R.id.editorBack).setOnClickListener(v -> finish());
@@ -26,6 +28,8 @@ public class UserActivity extends Activity {
     private void save() {
         activeUser.setName(nameField.getText().toString());
         activeUser.setState(stateField.getText().toString());
+        try { activeUser.setAge(Integer.parseInt(ageField.getText().toString())); }
+        catch (NumberFormatException ignored) { /* Оставляем прежний возраст. */ }
         finish();
     }
 }

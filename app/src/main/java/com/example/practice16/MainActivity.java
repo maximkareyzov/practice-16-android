@@ -29,6 +29,9 @@ public class MainActivity extends Activity {
             selectedPosition = -1;
             userPanel.setVisibility(View.GONE);
         });
+        findViewById(R.id.editButton).setOnClickListener(v -> {
+            if (selectedPosition >= 0 && selectedPosition < users.size()) openEditor(selectedPosition);
+        });
         listView.setOnItemClickListener((parent, view, position, id) -> {
             selectedPosition = position;
             showUser(users.get(position));
