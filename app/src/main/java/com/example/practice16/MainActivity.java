@@ -19,10 +19,10 @@ public class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_main);
-        users.add(new User("Иван", "Я устал", 19));
-        users.add(new User("Анна", "Учусь программировать", 20));
-        users.add(new User("Мария", "На занятиях", 21));
-        users.add(new User("Алексей", "Работаю над проектом", 19));
+        users.add(new User("Иван", "Я устал", 19, 0));
+        users.add(new User("Анна", "Учусь программировать", 20, 1));
+        users.add(new User("Мария", "На занятиях", 21, 2));
+        users.add(new User("Алексей", "Работаю над проектом", 19, 0));
         adapter = new UserListAdapter();
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
@@ -48,6 +48,13 @@ public class MainActivity extends Activity {
             User user = getItem(position);
             ((TextView) row.findViewById(R.id.itemName)).setText(user.getName());
             ((TextView) row.findViewById(R.id.itemState)).setText(user.getState());
+            int indicator;
+            switch (user.getStateSignal()) {
+                case 1: indicator = R.drawable.back_online; break;
+                case 2: indicator = R.drawable.back_departed; break;
+                default: indicator = R.drawable.back_offline;
+            }
+            row.findViewById(R.id.stateRound).setBackgroundResource(indicator);
             return row;
         }
     }
