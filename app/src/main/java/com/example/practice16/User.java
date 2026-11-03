@@ -16,5 +16,5 @@ public class User {
     public String getState() { return state; }
     public void setState(String state) { this.state = state; }
     public int getAge() { return age; }
-    public void setAge(int age, int stateSignal) { this.age = age; }
+    public void setAge(int age) { this.age = age; }
 }
