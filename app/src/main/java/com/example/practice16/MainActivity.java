@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         new UserStaticInfo();
+        if (UserStaticInfo.signedInUser != null && !users.contains(UserStaticInfo.signedInUser)) {
+            users.add(0, UserStaticInfo.signedInUser);
+        }
         setContentView(R.layout.activity_main);
         adapter = new UserListAdapter();
         ListView listView = findViewById(R.id.listView);
