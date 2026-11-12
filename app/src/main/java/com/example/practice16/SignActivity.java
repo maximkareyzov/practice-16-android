@@ -3,12 +3,16 @@ package com.example.practice16;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.animation.AnimationUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +35,22 @@ public class SignActivity extends Activity {
     private String text(EditText field) { return field.getText().toString().trim(); }
     private String email(String value) { return value.contains("@") ? value : value + "@practice17.invalid"; }
     private boolean configured() { if (FirebaseApp.getApps(this).isEmpty()) { toast(R.string.firebase_missing); return false; } return true; }
+    private boolean required(EditText field) {
+        boolean ok = !text(field).isEmpty();
+        if (!ok) field.startAnimation(AnimationUtils.loadAnimation(this, R.anim.error_edit));
+        return ok;
+    }
+    private void invalidFields() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= 26) vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+            else vibrator.vibrate(150);
+        }
+        toast(R.string.empty_fields);
+    }
     public void SignIn(View view) {
         String name = text(login), pass = password.getText().toString();
-        if (name.isEmpty() || pass.isEmpty()) { toast(R.string.empty_fields); return; }
+        if (!(required(login) & required(password))) { invalidFields(); return; }
         if (!configured()) return;
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email(name), pass).addOnCompleteListener(this, task -> {
             if (task.isSuccessful() && task.getResult().getUser() != null) loadProfile(task.getResult().getUser().getUid(), name);
@@ -43,10 +60,14 @@ public class SignActivity extends Activity {
     public void SignUp(View view) {
         String name = text(newLogin), pass = newPassword.getText().toString();
         String displayName = text(newName), state = text(newState);
-        if (name.isEmpty() || pass.isEmpty() || displayName.isEmpty() || state.isEmpty()) { toast(R.string.empty_fields); return; }
+        if (!(required(newLogin) & required(newPassword) & required(newName) & required(newState))) { invalidFields(); return; }
         if (!configured()) return;
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email(name), pass).addOnCompleteListener(this, task -> {
-            if (!task.isSuccessful() || task.getResult().getUser() == null) { toast(R.string.wrong_login); return; }
+            if (!task.isSuccessful() || task.getResult().getUser() == null) {
+                if (task.getException() instanceof FirebaseAuthUserCollisionException) toast(R.string.user_exists);
+                else toast(R.string.wrong_login);
+                return;
+            }
             String uid = task.getResult().getUser().getUid();
             Map<String, Object> profile = new HashMap<>();
             profile.put("name", displayName); profile.put("age", Transform.parseIntOrDefault(text(newAge), 0)); profile.put("state", state);
