@@ -32,6 +32,9 @@ public class SignActivity extends Activity {
         newLogin = findViewById(R.id.NewLoginTextView); newPassword = findViewById(R.id.NewPasswordTextView);
         newName = findViewById(R.id.NewNameTextView); newAge = findViewById(R.id.NewAgeTextView); newState = findViewById(R.id.NewStateTextView);
         login.setText(getSharedPreferences("settings", MODE_PRIVATE).getString("login", ""));
+        if (FirebaseApp.getApps(this).size() > 0 && FirebaseAuth.getInstance().getCurrentUser() != null) {
+            loadProfile(FirebaseAuth.getInstance().getCurrentUser().getUid(), text(login));
+        }
     }
     private String text(EditText field) { return field.getText().toString().trim(); }
     private String email(String value) { return value.contains("@") ? value : value + "@practice17.invalid"; }
@@ -103,7 +106,7 @@ public class SignActivity extends Activity {
     private void goNext(String id, String name) {
         UserStaticInfo.profileId = id;
         getSharedPreferences("settings", MODE_PRIVATE).edit().putString("login", name).apply();
-        startActivity(new Intent(this, MainActivity.class)); finish();
+        startActivity(new Intent(this, LoadedUserDataActivity.class)); finish();
     }
     public void openDemo(View view) { startActivity(new Intent(this, MainActivity.class)); }
     private void toast(int id) { Toast.makeText(this, id, Toast.LENGTH_SHORT).show(); }
