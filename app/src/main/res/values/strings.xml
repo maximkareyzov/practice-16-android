@@ -1,1 +1,10 @@
-<resources><string name="app_name">Практика 16 — Пользователи</string><string name="select_user">Выберите пользователя</string><string name="back">Назад</string><string name="save">Сохранить</string><string name="name_hint">Имя</string><string name="state_hint">Статус</string><string name="edit">Редактировать</string><string name="age_hint">Возраст</string></resources>
+<resources>
+    <string name="app_name">Практика 17 — Пользователи</string>
+    <string name="select_user">Выберите пользователя</string><string name="back">Назад</string><string name="save">Сохранить</string>
+    <string name="name_hint">Имя</string><string name="state_hint">Статус</string><string name="edit">Редактировать</string><string name="age_hint">Возраст</string>
+    <string name="sign_in">Вход</string><string name="sign_up">Регистрация</string><string name="login_hint">Логин или почта</string><string name="password_hint">Пароль</string>
+    <string name="go_sign_in">Войти</string><string name="go_sign_up">Зарегистрироваться</string><string name="empty_fields">Заполните все обязательные поля</string>
+    <string name="wrong_login">Не удалось войти. Проверьте логин и пароль</string><string name="user_exists">Пользователь уже существует</string>
+    <string name="firebase_missing">Сначала подключите Firebase: нужен app/google-services.json</string><string name="db_error">Ошибка базы данных. Проверьте подключение и правила доступа</string>
+    <string name="demo_open">Открыть список без входа</string><string name="loading">Загрузка профиля…</string>
+</resources>

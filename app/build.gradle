@@ -1,5 +1,9 @@
 plugins { id 'com.android.application' }
 
+// Конфигурация привязана к личному Firebase-проекту и не хранится в Git.
+if (file('google-services.json').exists()) {
+    apply plugin: 'com.google.gms.google-services'
+}
 android {
     namespace 'com.example.practice16'
     compileSdk 35
@@ -15,5 +19,9 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 }
-
-tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

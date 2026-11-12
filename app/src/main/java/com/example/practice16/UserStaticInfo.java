@@ -5,6 +5,8 @@ import java.util.List;
 
 /** Данные разделяются между активностями в течение работы процесса приложения. */
 public class UserStaticInfo {
+    public static String profileId;
+    public static final String USERS_PROFILE_INFO = "UsersProfileInfo";
     public static final String POSITION = "position";
     public static final List<User> users = new ArrayList<>();
 

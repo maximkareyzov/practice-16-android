@@ -1,0 +1,7 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="20dp">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/sign_in" android:textSize="24sp"/>
+    <EditText android:id="@+id/LoginTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/login_hint" android:inputType="text" android:maxLines="1"/>
+    <EditText android:id="@+id/PasswordTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/password_hint" android:inputType="textPassword"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/go_sign_in" android:onClick="SignIn"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/demo_open" android:onClick="openDemo"/>
+</LinearLayout>
