@@ -1,6 +1,6 @@
 plugins { id 'com.android.application' }
 
-// Конфигурация привязана к личному Firebase-проекту и не хранится в Git.
+// Google Services подключается, когда конфигурация Firebase доступна.
 if (file('google-services.json').exists()) {
     apply plugin: 'com.google.gms.google-services'
 }

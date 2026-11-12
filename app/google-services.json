@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "50499998482",
+    "firebase_url": "https://practice17-47b87-default-rtdb.firebaseio.com",
+    "project_id": "practice17-47b87",
+    "storage_bucket": "practice17-47b87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50499998482:android:44d0cf4e3615bff3ba59cb",
+        "android_client_info": {
+          "package_name": "com.example.practice16"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOHnx9QQorkMrtUMtYqSc4oFBev5V2Ypc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
