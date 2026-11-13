@@ -16,7 +16,7 @@ import java.io.InputStream;
 public class LoadedUserDataActivity extends Activity {
     private MediaPlayer player;
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private final Runnable next = () -> { startActivity(new Intent(this, MainActivity.class)); finish(); };
+    private final Runnable next = () -> { startActivity(new Intent(this, MessengerActivity.class)); finish(); };
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state); setContentView(R.layout.activity_loaded_user_data);
         // Тихий учебный звук хранится текстом base64 и распаковывается в кеш.
@@ -30,7 +30,9 @@ public class LoadedUserDataActivity extends Activity {
             if (player != null) { player.setVolume(0.2f, 0.2f); player.setLooping(true); }
         } catch (Exception ignored) { /* загрузка работает и без звука */ }
     }
-    @Override protected void onStart() { super.onStart(); if (player != null) player.start(); handler.postDelayed(next, 1500); }
-    @Override protected void onStop() { handler.removeCallbacks(next); if (player != null && player.isPlaying()) player.pause(); super.onStop(); }
+    @Override protected void onStart() { super.onStart(); handler.postDelayed(next, 1500); }
+    @Override protected void onResume() { super.onResume(); if (player != null && getSharedPreferences("settings", MODE_PRIVATE).getBoolean("sound_enabled", true)) player.start(); }
+    @Override protected void onPause() { if (player != null && player.isPlaying()) player.pause(); super.onPause(); }
+    @Override protected void onStop() { handler.removeCallbacks(next); super.onStop(); }
     @Override protected void onDestroy() { handler.removeCallbacks(next); if (player != null) { player.release(); player = null; } super.onDestroy(); }
 }

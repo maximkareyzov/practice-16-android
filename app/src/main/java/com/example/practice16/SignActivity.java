@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,6 +59,7 @@ public class SignActivity extends Activity {
         if (!configured()) return;
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email(name), pass).addOnCompleteListener(this, task -> {
             if (task.isSuccessful() && task.getResult().getUser() != null) loadProfile(task.getResult().getUser().getUid(), name);
+            else if (task.getException() instanceof FirebaseNetworkException) toast(R.string.network_error);
             else toast(R.string.wrong_login);
         });
     }
@@ -65,16 +67,19 @@ public class SignActivity extends Activity {
         String name = text(newLogin), pass = newPassword.getText().toString();
         String displayName = text(newName), state = text(newState);
         if (!(required(newLogin) & required(newPassword) & required(newName) & required(newState))) { invalidFields(); return; }
+        if (pass.length() < 6) { toast(R.string.password_short); return; }
         if (!configured()) return;
+        final int age = Transform.parseIntOrDefault(text(newAge), 0);
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email(name), pass).addOnCompleteListener(this, task -> {
             if (!task.isSuccessful() || task.getResult().getUser() == null) {
                 if (task.getException() instanceof FirebaseAuthUserCollisionException) toast(R.string.user_exists);
-                else toast(R.string.wrong_login);
+                else if (task.getException() instanceof FirebaseNetworkException) toast(R.string.network_error);
+                else toast(R.string.registration_error);
                 return;
             }
             String uid = task.getResult().getUser().getUid();
             Map<String, Object> profile = new HashMap<>();
-            profile.put("name", displayName); profile.put("age", Transform.parseIntOrDefault(text(newAge), 0)); profile.put("state", state);
+            profile.put("name", displayName); profile.put("age", age); profile.put("state", state);
             FirebaseDatabase.getInstance().getReference(UserStaticInfo.USERS_PROFILE_INFO).child(uid).setValue(profile).addOnCompleteListener(this, saved -> {
                 if (saved.isSuccessful()) loadProfile(uid, name);
                 else { FirebaseAuth.getInstance().signOut(); toast(R.string.db_error); }
