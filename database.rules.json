@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "UsersProfileInfo": {
+      ".read": "auth != null",
+      "$uid": { ".write": "auth != null && auth.uid === $uid" }
+    },
+    "Blocked": {
+      "$owner": {
+        ".read": "auth != null && auth.uid === $owner",
+        "$other": {
+          ".read": "auth != null && (auth.uid === $owner || auth.uid === $other)",
+          ".write": "auth != null && auth.uid === $owner && $owner !== $other",
+          ".validate": "newData.val() === true"
+        }
+      }
+    },
+    "Messages": {
+      "$recipient": {
+        "$sender": {
+          ".read": "auth != null && (auth.uid === $recipient || auth.uid === $sender)",
+          "$id": {
+            ".write": "auth != null && auth.uid === $sender && $sender !== $recipient && !data.exists() && newData.exists() && !root.child('Blocked').child($sender).child($recipient).exists() && !root.child('Blocked').child($recipient).child($sender).exists()",
+            ".validate": "newData.hasChildren(['text', 'timestamp']) && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 2000 && newData.child('timestamp').isNumber()"
+          }
+        }
+      }
+    }
+  }
+}
